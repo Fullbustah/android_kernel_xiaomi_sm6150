@@ -665,7 +665,6 @@ static bool check_for_block(struct wakeup_source *ws)
  */
 static void wakeup_source_report_event(struct wakeup_source *ws, bool hard)
 {
-<<<<<<< HEAD
 	ws->event_count++;
 	/* This is racy, but the counter is approximate anyway. */
 	if (events_check_enabled)
@@ -676,7 +675,6 @@ static void wakeup_source_report_event(struct wakeup_source *ws, bool hard)
 
 	if (hard)
 		pm_system_wakeup();
-=======
 #ifdef CONFIG_BOEFFLA_WL_BLOCKER
 	if (!check_for_block(ws))	// AP: check if wakelock is on wakelock blocker list
 	{
@@ -691,7 +689,6 @@ static void wakeup_source_report_event(struct wakeup_source *ws, bool hard)
 #ifdef CONFIG_BOEFFLA_WL_BLOCKER
 	}
 #endif
->>>>>>> 201e8a8b6e07... boeffla_wl_blocker: add generic wakelock blocker driver v1.0.0
 }
 
 /**
@@ -981,16 +978,13 @@ void pm_print_active_wakeup_sources(void)
 	srcuidx = srcu_read_lock(&wakeup_srcu);
 	list_for_each_entry_rcu(ws, &wakeup_sources, entry) {
 		if (ws->active) {
-<<<<<<< HEAD
 			pr_debug("active wakeup source: %s\n", ws->name);
 			active = 1;
-=======
 			pr_info("active wakeup source: %s\n", ws->name);
 #ifdef CONFIG_BOEFFLA_WL_BLOCKER
 			if (!check_for_block(ws))	// AP: check if wakelock is on wakelock blocker list
 #endif
 				active = 1;
->>>>>>> 201e8a8b6e07... boeffla_wl_blocker: add generic wakelock blocker driver v1.0.0
 		} else if (!active &&
 			   (!last_activity_ws ||
 			    ktime_to_ns(ws->last_time) >
